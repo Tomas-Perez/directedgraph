@@ -33,6 +33,7 @@ class Digraph:
         for key, vertex in self.vertices.items():
             if vertex is data:
                 return key
+        return -1
 
     def add_edge(self, from_vertex, to_vertex):
         if from_vertex not in self.vertices or to_vertex not in self.vertices:
@@ -50,3 +51,9 @@ class Digraph:
 
     def get_adjacency_list(self, vertex):
         return [x.to_vertex for x in self.edges if x.from_vertex is vertex]
+
+    def edge_exists(self, from_vertex, to_vertex):
+        return from_vertex in self.vertices and \
+               to_vertex in self.vertices and \
+               Edge(from_vertex, to_vertex) in self.edges
+
