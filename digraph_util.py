@@ -1,4 +1,5 @@
 import numpy as np
+from graphviz import Digraph as DG
 
 
 def plain_search(graph):
@@ -112,3 +113,14 @@ def warshall(graph):
                 matrix[i, j] |= matrix[i, k] and matrix[k, j]
 
     return matrix
+
+
+def save(graph, name, view=False, format='pdf'):
+    dot = DG(name=name, format=format)
+    for vertex, data in graph.vertices.items():
+        dot.node(str(vertex), str(data))
+
+    for edge in graph.edges:
+        dot.edge(str(edge.from_vertex), str(edge.to_vertex))
+
+    dot.render(view=view)

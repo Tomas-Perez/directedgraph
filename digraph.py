@@ -1,4 +1,5 @@
 from collections import namedtuple
+from random import randint
 Edge = namedtuple("Edge", "from_vertex to_vertex")
 
 
@@ -8,6 +9,14 @@ class Digraph:
         self.vertices = dict()
         self.max_order = max_order
         self.key_gen = 0
+
+    @property
+    def order(self):
+        return len(self.vertices)
+
+    @property
+    def number_of_edges(self):
+        return len(self.edges)
 
     def add_vertex(self, data):
         if self.order == self.max_order:
@@ -20,14 +29,6 @@ class Digraph:
             if x.from_vertex is key or x.to_vertex is key:
                 self.edges.remove(x)
         return self.vertices.pop(key)
-
-    @property
-    def order(self):
-        return len(self.vertices)
-
-    @property
-    def number_of_edges(self):
-        return len(self.edges)
 
     def index_of(self, data):
         for key, vertex in self.vertices.items():
@@ -56,4 +57,21 @@ class Digraph:
         return from_vertex in self.vertices and \
                to_vertex in self.vertices and \
                Edge(from_vertex, to_vertex) in self.edges
+
+    @classmethod
+    def random(cls, max_vertices, max_edges):
+        def random_vertices():
+            def random_vertex():
+                return result.index_of(randint(0, max_vertices - 1))
+            return random_vertex(), random_vertex()
+
+        result = cls()
+
+        for i in range(max_vertices):
+            result.add_vertex(i)
+
+        for i in range(max_edges):
+            result.add_edge(*random_vertices())
+
+        return result
 
