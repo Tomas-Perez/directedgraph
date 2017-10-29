@@ -9,11 +9,11 @@ def save_test():
     graph.add_vertex("c")
     graph.add_vertex("d")
     graph.add_vertex("e")
-    graph.add_edge(graph.index_of('a'), graph.index_of('c'))
-    graph.add_edge(graph.index_of('a'), graph.index_of('b'))
-    graph.add_edge(graph.index_of('b'), graph.index_of('d'))
-    graph.add_edge(graph.index_of('c'), graph.index_of('d'))
-    graph.add_edge(graph.index_of('d'), graph.index_of('e'))
+    graph.add_edge(graph.key_of('a'), graph.key_of('c'))
+    graph.add_edge(graph.key_of('a'), graph.key_of('b'))
+    graph.add_edge(graph.key_of('b'), graph.key_of('d'))
+    graph.add_edge(graph.key_of('c'), graph.key_of('d'))
+    graph.add_edge(graph.key_of('d'), graph.key_of('e'))
 
     save(graph, 'lmao', view=True, format='png')
 

@@ -1,16 +1,31 @@
 import numpy as np
-from graphviz import Digraph as DG
+import graphviz
 
 
 def plain_search(graph):
+    """
+    Iterator over the given graph vertices in the order they were inserted.
+    :param graph: graph to iterate over
+    :return: vertex iterator
+    """
     return iter(graph.vertices)
 
 
 def bfs(graph):
+    """
+    Iterator over the given graph via Breath-First-Search
+    :param graph: graph to iterate over
+    :return: vertex iterator
+    """
     return __traversal(graph, 'bfs')
 
 
 def dfs(graph):
+    """
+    Iterator over the given graph via Depth-First-Search
+    :param graph: graph to iterate over
+    :return: vertex iterator
+    """
     return __traversal(graph, 'dfs')
 
 
@@ -35,6 +50,11 @@ def __traversal(graph, algorithm):
 
 
 def number_of_sinks(graph):
+    """
+    Get the number of sink vertices in the given graph.
+    :param graph: graph to count sinks on
+    :return: number of sink vertices in the graph
+    """
     is_sink_dict = {k: True for k in graph.vertices}
     for edge in graph.edges:
         is_sink_dict[edge.from_vertex] = False
@@ -43,6 +63,11 @@ def number_of_sinks(graph):
 
 
 def number_of_sources(graph):
+    """
+    Get the number of source vertices in the given graph.
+    :param graph: graph to count sources on.
+    :return: number of source vertices in the graph
+    """
     is_source_dict = {k: True for k in graph.vertices}
     for edge in graph.edges:
         is_source_dict[edge.to_vertex] = False
@@ -51,6 +76,11 @@ def number_of_sources(graph):
 
 
 def is_weakly_connected(graph):
+    """
+    Given a graph, return whether it is weakly connected or not.
+    :param graph: graph to check
+    :return: True if the graph is weakly connected, False if it is not.
+    """
     def get_non_directed_adjacency_list(vertex):
         result = []
         for x in graph.edges:
@@ -75,6 +105,15 @@ def is_weakly_connected(graph):
 
 
 def path_exists(graph, a, b, length=0, transitive_closure=None):
+    """
+    Given a graph and two vertices returns whether a path between them exists.
+    :param graph: graph to search on
+    :param a: source vertex
+    :param b: destination vertex
+    :param length: max path length, 0 = unlimited
+    :param transitive_closure: transitive closure of the graph, significantly reduces execution time
+    :return: True if a path exists, False if it does not.
+    """
     if transitive_closure is not None:
         if a == -1 or b == -1:
             return False
@@ -83,8 +122,11 @@ def path_exists(graph, a, b, length=0, transitive_closure=None):
         except IndexError:
             return False
 
+    visited = []
+
     def helper_path_exists(from_vertex, current_len=1):
         a_adjacency_list = graph.get_adjacency_list(from_vertex)
+        visited.append(from_vertex)
         path_of_len_exists = b in a_adjacency_list
         if path_of_len_exists:
             return True
@@ -92,14 +134,20 @@ def path_exists(graph, a, b, length=0, transitive_closure=None):
             return False
         else:
             for x in a_adjacency_list:
-                if helper_path_exists(x, current_len + 1):
-                    return True
+                if x not in visited:
+                    if helper_path_exists(x, current_len + 1):
+                        return True
             return False
 
     return helper_path_exists(a)
 
 
 def warshall(graph):
+    """
+    Given a graph, calculates and returns its transitive closure
+    :param graph: graph to calculate the closure to
+    :return: the given graph's transitive closure
+    """
     order = graph.order
     matrix = np.full((order, order), False)
 
@@ -116,7 +164,14 @@ def warshall(graph):
 
 
 def save(graph, name, view=False, format='pdf'):
-    dot = DG(name=name, format=format)
+    """
+    Render and save the given graph with Graphviz.
+    :param graph: graph to save
+    :param name: name of the saved file
+    :param view: True to show the result, False to not show it.
+    :param format: format to save the graph on (png, pdf, and more).
+    """
+    dot = graphviz.Digraph(name=name, format=format)
     for vertex, data in graph.vertices.items():
         dot.node(str(vertex), str(data))
 
