@@ -1,0 +1,202 @@
+\documentclass[a4paper,10pt]{extarticle}
+\usepackage[a4paper,pdftex]{geometry}	% A4paper margins
+\setlength{\oddsidemargin}{5mm}			% Remove 'twosided' indentation
+\setlength{\evensidemargin}{5mm}
+\usepackage[english]{babel}
+\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{makeidx}
+\usepackage{helvet}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{framed}
+\usepackage{geometry}
+\usepackage[]{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=cyan,
+    urlcolor=magenta,
+}
+
+\newcommand{\methodSpec}[7] {
+  \vbox{
+    \begin{framed}
+      \noindent
+      \textbf{#1}: #2 $\to$ #3\\
+      \textbf{Description:} #4 \ \\
+      \textbf{Precondition:} #5 \ \\
+      \textbf{Postcondition:} #6 \ \\
+      \textbf{Classification:} #7
+    \end{framed}
+  }
+}
+
+\pagenumbering{arabic}
+
+
+
+
+% --------------------------------------------------------------------
+% Definitions (do not change this)
+% --------------------------------------------------------------------
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}} 	% Horizontal rule
+
+\makeatletter							% Title
+\def\printtitle{%
+    {\centering \@title\par}}
+\makeatother
+
+\makeatletter							% Author
+\def\printauthor{%
+    {\centering \large \@author}}
+\makeatother
+
+% --------------------------------------------------------------------
+% Metadata (Change this)
+% --------------------------------------------------------------------
+
+\title{	\large \textsc{Discrete Mathematics} 	% Subtitle
+		 	\\[2.0cm]								% 2cm spacing
+			\HRule{0.5pt} \\						% Upper rule
+			\LARGE \textbf{\uppercase{Directed Graph}}	% Title
+			\HRule{2pt} \\ [0.5cm]		% Lower rule + 0.5cm spacing
+}
+
+
+
+\author{
+        Perez Molina, Tomás\\
+}
+
+
+\begin{document}
+
+
+% ------------------------------------------------------------------------------
+% Maketitle
+% ------------------------------------------------------------------------------
+\thispagestyle{empty}		% Remove page numbering on this page
+
+\printtitle					% Print the title data as defined above
+  	\vfill
+\printauthor				% Print the author data as defined above
+\newpage
+% ------------------------------------------------------------------------------
+% Begin document
+% ------------------------------------------------------------------------------
+
+
+
+\tableofcontents
+\thispagestyle{empty}
+\pagebreak
+
+\setcounter{page}{1} % Set page numbering to begin on this page
+
+\pagebreak
+\section{Assignment}
+  \begin{enumerate}
+    \item Specify a directed non-weighted graph.
+    \item Implement and test a directed non-weighted graph with an edges linked list. Calculate the order of each operation.
+    \item To test the correct functionality of the previous class:
+      \begin{enumerate}[label=(\roman*)]
+        \item Implement a function to load data to a graph (for both vertices and edges).
+        \item Implement a function to generate a random graph.
+        \item Implement a function to show the graph on screen (either a list with vertices and edges or a graph drawing).
+      \end{enumerate}
+    \item Implement all three traversal algorithms (Plain search, BFS and DFS)
+    \item Modifying previous functions, write and test algorithms that:
+      \begin{enumerate}[label=(\roman*)]
+        \item Calculate the amount of sources and sinks.
+        \item Verify if the graph is weakly connected.
+        \item Given two vertices, verify if a path of length 2 exists between them.
+        \item Implement Warshall's algorithm.
+      \end{enumerate}
+  \end{enumerate}
+
+  \vspace{1cm}
+
+\section{Specification}
+  \subsection{DirectedGraph}
+    \textit{Description:}
+      Represents a directed non-weighted graph.
+
+  	  \methodSpec{DirectedGraph}
+      {IdMaterial x Type x Title x Author x Year}
+      {Material}
+      {Creates a new Material with the given data.}
+      {\\o Type is either 1 or 2.
+      \\o IdMAterial $\ge$ 1}
+      {A Material is created.}
+      {Constructor}
+
+      \methodSpec{destroyMaterial}
+      {Material}
+      {void}
+      {Deallocates all memory assigned to the Material.}
+      {Material must exist.}
+      {Memory freed.}
+      {Destructor}
+      \vspace{1cm}
+
+  \subsection{Graph Related Algorithms}
+    \textit{Description:}
+      Algorithms related to graph theory
+
+      \methodSpec{getSources}
+      {Graph}
+      {Number}
+      {Given a graph returns the number of source vertices.}
+      {Graph must exist}
+      {Return the amount of source vertices in the graph}
+      {Analyzer}
+
+      \methodSpec{getSinks}
+      {Graph}
+      {Number}
+      {Given a graph returns the number of sink vertices.}
+      {Graph must exist}
+      {Return the amount of sink vertices in the graph}
+      {Analyzer}
+
+      \methodSpec{isWeaklyConnected}
+      {Graph}
+      {Boolean}
+      {Given a graph, checks whether it is weakly connected.}
+      {Graph must exist}
+      {
+        \begin{itemize}
+          \item True if the graph is weakly connected.
+          \item False if the graph is not weakly connected.
+        \end{itemize}
+      }
+      {Analyzer}
+
+      \methodSpec{pathOfLengthTwoExists}
+      {Graph x Vertex x Vertex}
+      {Boolean}
+      {Given a graph and two vertices checks if a path of length 2 exists between them in the graph.}
+      {Graph and both vertices must exist}
+      {
+        \begin{itemize}
+          \item True if a path of length two between the two vertces exists.
+          \item False if a path of length two between the two vertces does not exist.
+        \end{itemize}
+      }
+      {Analyzer}
+
+      \methodSpec{warshall}
+      {Graph}
+      {Transitive Closure}
+      {Given a graph calculates its transitive closure using Warshall's.}
+      {Graph must exist}
+      {The transitive closure must have the capability of calculating whether
+      there is a path between two vertices in O(1) time.}
+      {Analyzer}
+
+
+\end{document}
