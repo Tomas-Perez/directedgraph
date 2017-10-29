@@ -15,7 +15,7 @@ def save_test():
     graph.add_edge(graph.key_of('c'), graph.key_of('d'))
     graph.add_edge(graph.key_of('d'), graph.key_of('e'))
 
-    save(graph, 'lmao', view=True, format='png')
+    save(graph, 'lmao', view=True, s_format='png')
 
 
 def random_test():

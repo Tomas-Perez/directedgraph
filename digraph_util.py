@@ -163,15 +163,15 @@ def warshall(graph):
     return matrix
 
 
-def save(graph, name, view=False, format='pdf'):
+def save(graph, name, view=False, s_format='pdf'):
     """
     Render and save the given graph with Graphviz.
     :param graph: graph to save
     :param name: name of the saved file
     :param view: True to show the result, False to not show it.
-    :param format: format to save the graph on (png, pdf, and more).
+    :param s_format: format to save the graph on (png, pdf, and more).
     """
-    dot = graphviz.Digraph(name=name, format=format)
+    dot = graphviz.Digraph(name=name, format=s_format)
     for vertex, data in graph.vertices.items():
         dot.node(str(vertex), str(data))
 
