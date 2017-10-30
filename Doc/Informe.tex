@@ -1,0 +1,393 @@
+\documentclass[a4paper,10pt]{extarticle}
+\usepackage[a4paper,pdftex]{geometry}	% A4paper margins
+\setlength{\oddsidemargin}{5mm}			% Remove 'twosided' indentation
+\setlength{\evensidemargin}{5mm}
+\usepackage[spanish]{babel}
+\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{makeidx}
+\usepackage{helvet}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{framed}
+\usepackage{geometry}
+\usepackage[]{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=cyan,
+    urlcolor=magenta,
+}
+
+\newcommand{\methodSpec}[8] {
+  \vbox{
+    \begin{framed}
+      \noindent
+      \textbf{#1}: #2 $\to$ #3\ \\
+      \textbf{Order:} O(#4) \ \\
+      \textbf{Description:} #5 \ \\
+      \textbf{Precondition:} #6 \ \\
+      \textbf{Postcondition:} #7 \ \\
+      \textbf{Classification:} #8
+    \end{framed}
+  }
+}
+
+\pagenumbering{arabic}
+
+
+
+
+% --------------------------------------------------------------------
+% Definitions (do not change this)
+% --------------------------------------------------------------------
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}} 	% Horizontal rule
+
+\makeatletter							% Title
+\def\printtitle{%
+    {\centering \@title\par}}
+\makeatother
+
+\makeatletter							% Author
+\def\printauthor{%
+    {\centering \large \@author}}
+\makeatother
+
+% --------------------------------------------------------------------
+% Metadata (Change this)
+% --------------------------------------------------------------------
+
+\title{	\large \textsc{Matemática Discreta} 	% Subtitle
+		 	\\[2.0cm]								% 2cm spacing
+			\HRule{0.5pt} \\						% Upper rule
+			\LARGE \textbf{\uppercase{Grafo Dirigido}}	% Title
+			\HRule{2pt} \\ [0.5cm]		% Lower rule + 0.5cm spacing
+}
+
+
+
+\author{
+        Perez Molina, Tomás\\
+}
+
+
+\begin{document}
+
+
+% ------------------------------------------------------------------------------
+% Maketitle
+% ------------------------------------------------------------------------------
+\thispagestyle{empty}		% Remove page numbering on this page
+
+\printtitle					% Print the title data as defined above
+  	\vfill
+\printauthor				% Print the author data as defined above
+\newpage
+% ------------------------------------------------------------------------------
+% Begin document
+% ------------------------------------------------------------------------------
+
+
+
+\tableofcontents
+\thispagestyle{empty}
+\pagebreak
+
+\setcounter{page}{1} % Set page numbering to begin on this page
+
+\pagebreak
+\section{Consigna}
+  \begin{enumerate}
+    \item Especificar un grafo dirigido y no ponderado.
+    \item Realizar y probar la implementación de un grafo dirigido y no ponderado con lista de aristas. Calcular el orden de cada operación.
+    \item Para probar el buen funcionamiento de la clase anterior:
+      \begin{enumerate}[label=(\roman*)]
+        \item Hacer un método que permita cargar datos a un grafo (este método debe permita cargar los valores de los nodos y las aristas).
+        \item Hacer un método que genere un grafo en forma aleatoria.
+        \item Hacer un método que muestre por pantalla al grafo (puede ser un listado con los valores de los nodos y otro con las aristas o bien el dibujo del grafo).
+      \end{enumerate}
+    \item Implementar los tres algoritmos que permiten recorrer un grafo (búsqueda plana, BFS y DFS)
+    \item Modificando adecuadamente los métodos anteriores, escribir y probar algoritmos que:
+      \begin{enumerate}[label=(\roman*)]
+        \item Obtengan la cantidad de vértices fuentes y la cantidad de sumideros.
+        \item Verificar si es débilmente conexo.
+        \item Dados dos vértices verificar si existe un camino de longitud 2 entre ambos.
+        \item Implementar el algoritmo de Warshall.
+      \end{enumerate}
+  \end{enumerate}
+
+  \vspace{1cm}
+
+\section{Especificación}
+  \subsection{DirectedGraph}
+    \textit{Description:}
+      Represents a directed non-weighted graph.
+
+  	  \methodSpec{Digraph}
+      {Max Order}
+      {Digraph}
+      {1}
+      {Creates a new empty digraph with the given max order limit. If no max order is given, the graph has unlimited max order.}
+      {Max Order $>$ 0}
+      {A Digraph is created.}
+      {Constructor}
+
+      \methodSpec{add$\_$vertex}
+      {Digraph X Data}
+      {void}
+      {1}
+      {Adds a new vertex to the graph and stores the given data.}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item Data must exist.
+      \end{itemize}
+      }
+      {New vertex added to the given graph, storing the given data.}
+      {Modifier}
+
+      \methodSpec{remove$\_$vertex}
+      {Digraph X Key}
+      {Data}
+      {n}
+      {Finds the vertex referenced by the given key in the digraph and removes it. Returns the data stored in the vertex.}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item Key must reference an existing vertex in the digraph.
+      \end{itemize}
+      }
+      {Vertex removed, and its data returned}
+      {Modifier}
+
+      \methodSpec{key$\_$of}
+      {Digraph X Data}
+      {Key}
+      {n}
+      {Finds the key referencing the vertex storing the given data in the graph.}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item The data must be stored in the digraph.
+      \end{itemize}
+      }
+      {Key referencing the vertex storing the given data is returned.}
+      {Analyzer}
+
+      \methodSpec{add$\_$edge}
+      {Digraph X From Key X To Key}
+      {void}
+      {n}
+      {Adds a new edge connecting the vertices referenced by the given keys.
+      The edge goes from the vertex referenced by From Key to the vertex referenced by To Key.}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item From Key and To Key must reference vertices in the digraph.
+      \end{itemize}
+      }
+      {New edge added to the graph, that goes from the vertex referenced by From Key to the vertex referenced by To Key.}
+      {Modifier}
+
+      \methodSpec{remove$\_$edge}
+      {Digraph X From Key X To Key}
+      {void}
+      {n}
+      {Finds the edge connecting the vertices referenced by From Key and To Key and removes it.}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item From Key and To Key must reference a existing vertices in the digraph.
+        \item An edge going from the vertex referenced by From Key to the vertex referenced by To Key must exist.
+      \end{itemize}
+      }
+      {Edge removed}
+      {Modifier}
+
+      \methodSpec{get$\_$vertex}
+      {Digraph X Key}
+      {Data}
+      {1}
+      {Finds the vertex referenced by Key in the digraph and returns the data stored in it}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item Key must reference an existing vertex in the digraph.
+      \end{itemize}
+      }
+      {Return the data stored in the vertex referenced by the given key.}
+      {Analyzer}
+
+      \methodSpec{get$\_$adjacency$\_$list}
+      {Digraph X Key}
+      {Key List}
+      {n}
+      {Returns the list of all vertices adjacent to the one referenced by the given key in the graph.}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item Key must reference an existing vertex in the digraph.
+      \end{itemize}
+      }
+      {Return a list of keys referencing all adjacent vertices to the one referenced by the given key.}
+      {Analyzer}
+
+      \methodSpec{edge$\_$exists}
+      {Digraph X From Key X To Key}
+      {Boolean}
+      {n}
+      {Verifies whether an edge from the vertex referenced by From Key to the vertex referenced by To Key exists.}
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item From Key and To Key must reference a existing vertices in the digraph.
+      \end{itemize}
+      }
+      {
+        \begin{itemize}
+          \item True if the edge exists.
+          \item False if the edge does not exist.
+        \end{itemize}
+      }
+      {Analyzer}
+
+      \methodSpec{random$\_$digraph}
+      {Vertex Amount X Edge Amount}
+      {Digraph}
+      {n}
+      {Creates a random digraph with the given amount of vertices and edges.}
+      {
+      \begin{itemize}
+        \item Vertex Amount $>$ 0
+        \item Edge Amount $>$ 0
+      \end{itemize}
+      }
+      {A random digraph with the given amount of vertices and edges is created.}
+      {Constructor.}
+      \vspace{1cm}
+
+  \subsection{Graph Related Algorithms}
+    \textit{Description:}
+      Algorithms related to graph theory
+
+      \methodSpec{plain$\_$search}
+      {Graph}
+      {Key List}
+      {n}
+      {Given a graph returns a list of keys referencing all its vertices in no particular order.}
+      {Graph must exist}
+      {Return a list of keys referencing all vertices in the graph.}
+      {Analyzer}
+
+      \methodSpec{dfs}
+      {Graph}
+      {Key List}
+      {$n$\textsuperscript{2}}
+      {Given a graph returns a list of keys referencing all its vertices using Depth First Search, starting from the vertex first inserted in the graph.}
+      {Graph must exist}
+      {Return a list of keys referencing all vertices in the graph using Depth First Search.}
+      {Analyzer}
+
+      \methodSpec{bfs}
+      {Graph}
+      {Key List}
+      {$n$\textsuperscript{2}}
+      {Given a graph returns a list of keys referencing all its vertices using Breath First Search, starting from the vertex first inserted in the graph.}
+      {Graph must exist}
+      {Return a list of keys referencing all vertices in the graph using Breath First Search.}
+      {Analyzer}
+
+      \methodSpec{number$\_$of$\_$sources}
+      {Graph}
+      {Number}
+      {n}
+      {Given a graph returns the number of source vertices.}
+      {Graph must exist}
+      {Return the amount of source vertices in the graph}
+      {Analyzer}
+
+      \methodSpec{number$\_$of$\_$sinks}
+      {Graph}
+      {Number}
+      {n}
+      {Given a graph returns the number of sink vertices.}
+      {Graph must exist}
+      {Return the amount of sink vertices in the graph}
+      {Analyzer}
+
+      \methodSpec{is$\_$weakly$\_$connected}
+      {Graph}
+      {Boolean}
+      {$n$\textsuperscript{2}}
+      {Given a graph, checks whether it is weakly connected.}
+      {Graph must exist}
+      {
+        \begin{itemize}
+          \item True if the graph is weakly connected.
+          \item False if the graph is not weakly connected.
+        \end{itemize}
+      }
+      {Analyzer}
+
+      \methodSpec{path$\_$exists}
+      {Graph x From Key x To Key X Length X Transitive Closure}
+      {Boolean}
+      {$n$\textsuperscript{2}}
+      {
+      Checks if a path between the vertices referenced by From Key and To Key exist.
+      \begin{itemize}
+        \item A length or a transitive closure can be given, not both.
+        \item If a length is given, the path can be no longer than the length.
+        \item If a Transitive Closure is given the path is checked in it, achieving O(1) performance.
+      \end{itemize}
+      }
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item From Key and To Key must reference a existing vertices in the digraph.
+        \item If given, length $>$ 0.
+      \end{itemize}
+      }
+      {
+        \begin{itemize}
+          \item True if a path exists.
+          \item False if a path does not exist.
+        \end{itemize}
+      }
+      {Analyzer}
+
+      \methodSpec{warshall}
+      {Graph}
+      {Transitive Closure}
+      {$n$\textsuperscript{3}}
+      {Given a graph calculates its transitive closure using Warshall's.}
+      {Graph must exist}
+      {The transitive closure must have the capability of calculating whether
+      there is a path between two vertices in O(1) time.}
+      {Analyzer}
+
+      \methodSpec{save}
+      {Graph X Name X View X Format}
+      {void}
+      {n}
+      {Given a graph, stores its graphic representation in the given format with the given name. A view of the file is given if View is True.}
+      {
+      \begin{itemize}
+        \item Graph must exist
+        \item Name must be a valid file name
+        \item If given, view must be True or False (default False)
+        \item If given, format must be a valid file format for the Graphviz program (default 'pdf').
+      \end{itemize}
+      }
+      {
+      \begin{itemize}
+        \item A file containing DOT code for Graphviz and an image in the given format are created.
+        \item If View is True, the created image is displayed.
+      \end{itemize}
+      }
+      {Analyzer}
+
+\end{document}
