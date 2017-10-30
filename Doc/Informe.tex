@@ -1,7 +1,5 @@
 \documentclass[a4paper,10pt]{extarticle}
-\usepackage[a4paper,pdftex]{geometry}	% A4paper margins
-\setlength{\oddsidemargin}{5mm}			% Remove 'twosided' indentation
-\setlength{\evensidemargin}{5mm}
+\usepackage[a4paper,pdftex, margin=1in]{geometry}	% A4paper margins
 \usepackage[spanish]{babel}
 \usepackage[protrusion=true,expansion=true]{microtype}
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
@@ -15,6 +13,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -65,6 +65,8 @@
 			\HRule{0.5pt} \\						% Upper rule
 			\LARGE \textbf{\uppercase{Grafo Dirigido}}	% Title
 			\HRule{2pt} \\ [0.5cm]		% Lower rule + 0.5cm spacing
+      \vfill
+      \includegraphics[scale=0.75]{austral_logo.jpg}
 }
 
 
@@ -83,7 +85,10 @@
 \thispagestyle{empty}		% Remove page numbering on this page
 
 \printtitle					% Print the title data as defined above
-  	\vfill
+\vfill
+
+
+
 \printauthor				% Print the author data as defined above
 \newpage
 % ------------------------------------------------------------------------------
@@ -119,8 +124,8 @@
       \end{enumerate}
   \end{enumerate}
 
-  \vspace{1cm}
 
+\pagebreak
 \section{Especificación}
   \subsection{DirectedGraph}
     \textit{Description:}
@@ -269,6 +274,7 @@
       {Constructor.}
       \vspace{1cm}
 
+\pagebreak
   \subsection{Graph Related Algorithms}
     \textit{Description:}
       Algorithms related to graph theory
@@ -332,33 +338,6 @@
       }
       {Analyzer}
 
-      \methodSpec{path$\_$exists}
-      {Graph x From Key x To Key X Length X Transitive Closure}
-      {Boolean}
-      {$n$\textsuperscript{2}}
-      {
-      Checks if a path between the vertices referenced by From Key and To Key exist.
-      \begin{itemize}
-        \item A length or a transitive closure can be given, not both.
-        \item If a length is given, the path can be no longer than the length.
-        \item If a Transitive Closure is given the path is checked in it, achieving O(1) performance.
-      \end{itemize}
-      }
-      {
-      \begin{itemize}
-        \item Digraph must exist.
-        \item From Key and To Key must reference a existing vertices in the digraph.
-        \item If given, length $>$ 0.
-      \end{itemize}
-      }
-      {
-        \begin{itemize}
-          \item True if a path exists.
-          \item False if a path does not exist.
-        \end{itemize}
-      }
-      {Analyzer}
-
       \methodSpec{warshall}
       {Graph}
       {Transitive Closure}
@@ -389,5 +368,33 @@
       \end{itemize}
       }
       {Analyzer}
+
+      \methodSpec{path$\_$exists}
+      {Graph x From Key x To Key X Length X Transitive Closure}
+      {Boolean}
+      {$n$\textsuperscript{2}}
+      {
+      Checks if a path between the vertices referenced by From Key and To Key exist.
+      \begin{itemize}
+        \item A length or a transitive closure can be given, not both.
+        \item If a length is given, the path can be no longer than the length.
+        \item If a Transitive Closure is given the path is checked in it, achieving O(1) performance.
+      \end{itemize}
+      }
+      {
+      \begin{itemize}
+        \item Digraph must exist.
+        \item From Key and To Key must reference a existing vertices in the digraph.
+        \item If given, length $>$ 0.
+      \end{itemize}
+      }
+      {
+        \begin{itemize}
+          \item True if a path exists.
+          \item False if a path does not exist.
+        \end{itemize}
+      }
+      {Analyzer}
+
 
 \end{document}
